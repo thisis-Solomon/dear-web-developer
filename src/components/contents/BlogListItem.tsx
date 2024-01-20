@@ -14,7 +14,9 @@ export default function BlogListItem({
       <h1 className="font-bold text-2xl hover:underline">{title}</h1>
       <p className="py-4 text-stone-500">{date}</p>
       <div>
-        <article className="text-stone-700">{content}</article>
+        <article className="text-stone-700 max-w-3xl break-words line-clamp-3">
+          {content}
+        </article>
         <a
           className="text-sky-600 inline-block pt-4 hover:underline"
           href="#"
