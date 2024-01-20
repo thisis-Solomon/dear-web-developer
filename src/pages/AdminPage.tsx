@@ -1,5 +1,6 @@
 import { useContext, useRef } from "react";
 import { BlogsContext } from "../store/blogs-context";
+import slugify from "slugify";
 
 export default function AdminPage(): JSX.Element {
   const titleRef = useRef();
@@ -12,7 +13,7 @@ export default function AdminPage(): JSX.Element {
   const options = { month: "short", day: "numeric", year: "numeric" };
   const formatedDate = currentDate.toLocaleDateString("en-US", options);
 
-  const handleSubmitBlog = (event: { preventDefault: () => void; }): void => {
+  const handleSubmitBlog = (event: { preventDefault: () => void }): void => {
     event.preventDefault();
 
     const title = titleRef.current.value;
@@ -20,7 +21,7 @@ export default function AdminPage(): JSX.Element {
     const id = Math.random() * 100000;
 
     const data = {
-      id: id.toString(),
+      id: slugify(title, { lower: true }),
       title,
       content,
       date: formatedDate,

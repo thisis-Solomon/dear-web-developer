@@ -8,7 +8,7 @@ export default function BlogList(): JSX.Element {
   const { blogs } = blogCxt;
 
   return (
-    <section className="flex flex-col gap-y-10 pt-5 mx-10">
+    <section className="flex flex-col gap-y-10 pt-5 mx-3 max-w-2xl">
       {blogs.map((blog) => (
         <Link to={`/blog/${blog.id}`} key={blog.id}>
           <BlogListItem

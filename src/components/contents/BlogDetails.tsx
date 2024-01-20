@@ -13,7 +13,7 @@ export default function BlogDetails(): JSX.Element {
 
   return (
     <>
-      <section className="w-[60%] mx-auto">
+      <section className="w-[70%] mx-auto">
         <Link to="/" className="underline flex items-center gap-1 text-lg">
           <FiArrowLeft />
           Blogs
