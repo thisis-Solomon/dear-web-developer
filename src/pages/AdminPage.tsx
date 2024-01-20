@@ -1,32 +1,45 @@
-import { useContext, useRef } from "react";
+import { FormEvent, useContext, useRef } from "react";
 import { BlogsContext } from "../store/blogs-context";
 import slugify from "slugify";
 
+interface BlogIF {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+}
+
 export default function AdminPage(): JSX.Element {
-  const titleRef = useRef();
-  const inputBlog = useRef();
+  const titleRef = useRef<HTMLInputElement | null>(null);
+  const inputBlog = useRef<HTMLTextAreaElement | null>(null);
 
   const blogCxt = useContext(BlogsContext);
   const { addNewBlog, blogs } = blogCxt;
 
   const currentDate = new Date();
-  const options = { month: "short", day: "numeric", year: "numeric" };
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
   const formatedDate = currentDate.toLocaleDateString("en-US", options);
 
-  const handleSubmitBlog = (event: { preventDefault: () => void }): void => {
+  const handleSubmitBlog = (event: FormEvent): void => {
     event.preventDefault();
 
-    const title = titleRef.current.value;
-    const content = inputBlog.current.value;
-    const id = Math.random() * 100000;
+    if (titleRef.current && inputBlog.current) {
+      const title = titleRef.current.value;
+      const content = inputBlog.current.value;
 
-    const data = {
-      id: slugify(title, { lower: true }),
-      title,
-      content,
-      date: formatedDate,
-    };
-    addNewBlog(data);
+      const data: BlogIF = {
+        id: slugify(title, { lower: true }),
+        title,
+        content,
+        date: formatedDate,
+      };
+
+      addNewBlog(data);
+    }
   };
 
   return (
@@ -47,7 +60,7 @@ export default function AdminPage(): JSX.Element {
           </div>
           <div>
             <label className="block" htmlFor="title">
-              Title
+              Content
             </label>
             <textarea
               className="border border-stone-300 w-full h-[60vh]"
