@@ -1,6 +1,8 @@
 import { FormEvent, useContext, useRef } from "react";
 import { BlogsContext } from "../store/blogs-context";
 import slugify from "slugify";
+import { Link } from "react-router-dom";
+import FormInput from "../components/FormInput";
 
 interface BlogIF {
   id: string;
@@ -44,40 +46,27 @@ export default function AdminPage(): JSX.Element {
 
   return (
     <>
-      <section className="border w-full">
-        <form onSubmit={handleSubmitBlog} className="w-[80%] mx-4">
-          <div>
-            <label className="block" htmlFor="title">
-              Title
-            </label>
-            <input
-              className="border border-stone-300 w-full"
-              type="text"
-              placeholder="Title"
-              required
-              ref={titleRef}
-            />
-          </div>
-          <div>
-            <label className="block" htmlFor="title">
-              Content
-            </label>
-            <textarea
-              className="border border-stone-300 w-full h-[60vh]"
-              rows={5}
-              placeholder="Title"
-              required
-              ref={inputBlog}
-            ></textarea>
-          </div>
-          <button>Publish</button>
+      <section className="w-[80%]">
+        <form onSubmit={handleSubmitBlog} className="max-w-full">
+          <FormInput label="Title" inputValue={titleRef} />
+          <FormInput label="Content" inputValue={inputBlog} />
+          <button className="px-4 py-2 border border-stone-200 w-full font-bold uppercase rounded-md shadow-sm shadow-neutral-400/20">
+            Publish
+          </button>
         </form>
       </section>
-      <div>
+      <ul className="mt-5">
         {blogs.map((blog) => (
-          <p key={blog.id}>{blog.title}</p>
+          <li
+            key={blog.id}
+            className="mb-2 p-2 bg-stone-100 rounded-md font-semibold"
+          >
+            <Link to={`/blog/${blog.id}`} key={blog.id}>
+              {blog.title}
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 }
