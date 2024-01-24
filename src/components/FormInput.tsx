@@ -1,4 +1,8 @@
-export default function FormInput({ label, inputValue }): JSX.Element {
+export default function FormInput({
+  label,
+  inputValue,
+  ...props
+}): JSX.Element {
   const inputStyles =
     "border border-stone-300 w-full text-lg py-2 px-1 rounded-md placeholder:text-sm";
 
@@ -14,6 +18,7 @@ export default function FormInput({ label, inputValue }): JSX.Element {
           placeholder="Title"
           required
           ref={inputValue}
+          {...props}
         />
       ) : (
         <textarea
@@ -22,6 +27,7 @@ export default function FormInput({ label, inputValue }): JSX.Element {
           placeholder="Content"
           required
           ref={inputValue}
+          {...props}
         ></textarea>
       )}
     </div>

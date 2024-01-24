@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BlogsContext } from "../../store/blogs-context";
 import { FiArrowLeft } from "react-icons/fi";
+import FormInput from "../FormInput";
 
 export default function BlogDetails(): JSX.Element {
   const params = useParams();
@@ -46,44 +47,38 @@ export default function BlogDetails(): JSX.Element {
         )}
         {isEditing && (
           <form onSubmit={handleSubmitBlog} className="w-[80%] mx-4">
-            <div>
-              <label className="block" htmlFor="title">
-                Title
-              </label>
-              <input
-                className="border border-stone-300 w-full"
-                type="text"
-                placeholder="Title"
-                required
-                value={updateBlog.title}
-                onChange={(event) =>
-                  updatingHandler("title", event.target.value)
-                }
-              />
-            </div>
-            <div>
-              <label className="block" htmlFor="title">
-                Content
-              </label>
-              <textarea
-                className="border border-stone-300 w-full h-[60vh]"
-                rows={5}
-                placeholder="Title"
-                required
-                value={updateBlog.content}
-                onChange={(event) =>
-                  updatingHandler("content", event.target.value)
-                }
-              ></textarea>
-            </div>
-            <button>Save</button>
+            <FormInput
+              label="Title"
+              value={updateBlog.title}
+              onChange={(event) => updatingHandler("title", event.target.value)}
+            />
+            <FormInput
+              label="Content"
+              value={updateBlog.content}
+              onChange={(event) =>
+                updatingHandler("content", event.target.value)
+              }
+            />
+            <button className="py-3 border font-bold uppercase w-full mt-4 rounded-md shadow-md shadow-stone-300/25">
+              Save
+            </button>
           </form>
         )}
         {!isEditing && (
-          <>
-            <button onClick={() => removeABlog(params.id)}>Delete</button>
-            <button onClick={() => setIsEditing(!isEditing)}>Edit blog</button>
-          </>
+          <div className="flex justify-between border-t-2 border-stone-200/60">
+            <button
+              className="py-3 border font-bold uppercase w-[40%] mt-4 rounded-md shadow-md shadow-stone-300/25"
+              onClick={() => removeABlog(params.id)}
+            >
+              Delete
+            </button>
+            <button
+              className="py-3 border font-bold uppercase w-[40%] mt-4 rounded-md shadow-md shadow-stone-300/25"
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              Edit blog
+            </button>
+          </div>
         )}
       </section>
     </>
