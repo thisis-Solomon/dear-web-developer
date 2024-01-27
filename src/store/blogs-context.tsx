@@ -47,8 +47,10 @@ export default function BlogsContextProvider({
   }
 
   function removeABlog(id: string): void {
-    const filterdBlogs = blogs.filter((blog) => blog.id !== id);
-    setBlogs(filterdBlogs);
+    setTimeout(() => {
+      const filterdBlogs = blogs.filter((blog) => blog.id !== id);
+      setBlogs(filterdBlogs);
+    }, 1000);
   }
 
   function updateABlog(identifier: string, data: BlogIF) {

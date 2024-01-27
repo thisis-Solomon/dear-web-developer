@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BlogsContext } from "../../store/blogs-context";
 import { FiArrowLeft } from "react-icons/fi";
 import FormInput from "../FormInput";
 
 export default function BlogDetails(): JSX.Element {
   const params = useParams();
+  const navigate = useNavigate();
 
   const blogCxt = useContext(BlogsContext);
   const { blogs, removeABlog, updateABlog, isEditing, setIsEditing } = blogCxt;
@@ -28,6 +29,13 @@ export default function BlogDetails(): JSX.Element {
     updateABlog(params.id, updateBlog);
     setIsEditing(false);
   };
+
+  function deleteBlogHandler() {
+    removeABlog(params.id);
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  }
 
   return (
     <>
@@ -68,7 +76,7 @@ export default function BlogDetails(): JSX.Element {
           <div className="flex justify-between border-t-2 border-stone-200/60">
             <button
               className="py-3 border font-bold uppercase w-[40%] mt-4 rounded-md shadow-md shadow-stone-300/25"
-              onClick={() => removeABlog(params.id)}
+              onClick={deleteBlogHandler}
             >
               Delete
             </button>
